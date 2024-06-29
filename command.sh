@@ -3,10 +3,12 @@ tar -zxvf kafka_2.13-2.8.2.tgz
 cd kafka_2.13-2.8.2
 
 # 주키퍼 실행
-bin/zookeeper-server-start.sh config/zookeeper.properties
+bin/zookeeper-server-start.sh config/zookeeper.properties &
 
 # 카프카 실행
-bin/kafka-server-start.sh config/server.properties
+bin/kafka-server-start.sh config/server.properties &
+bin/kafka-server-start.sh config/server1.properties &
+bin/kafka-server-start.sh config/server2.properties &
 
 # topic 생성
 bin/kafka-topics.sh --create --topic topic-example1 --bootstrap-server localhost:9092
@@ -67,6 +69,6 @@ bin/kafka-console-consumer.sh --topic topic3 --from-beginning --group group2 --p
 bin/kafka-consumer-groups.sh --list --bootstrap-server localhost:9092
 bin/kafka-consumer-groups.sh --describe --group group1 --bootstrap-server localhost:9092
 
-
-
 bin/connect-standalone.sh config/connect-standalone.properties config/connect-file-sink.properties
+
+bin/kafka-topics.sh --create --topic topic5 --partitions 3 --bootstrap-server localhost:9093
