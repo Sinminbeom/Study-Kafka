@@ -18,15 +18,17 @@ public class Producer1 {
         configs.put(ProducerConfig.BOOTSTRAP_SERVERS_CONFIG, BOOTSTRAP_SERVERS);
         configs.put(ProducerConfig.KEY_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
         configs.put(ProducerConfig.VALUE_SERIALIZER_CLASS_CONFIG, StringSerializer.class.getName());
+        configs.put(ProducerConfig.ACKS_CONFIG, "all");
+        configs.put(ProducerConfig.RETRIES_CONFIG, "100");
 
         KafkaProducer<String, String> producer = new KafkaProducer<>(configs);
 
-        String message = "First Message";
+        String message = "Second Message";
 
         ProducerRecord<String, String> record = new ProducerRecord<>(TOPIC_NAME, message);
 
         RecordMetadata metadata = producer.send(record).get();
-        System.out.printf(">>> %s, %d, %d", message, metadata.partition(), metadata.offset());
+        System.out.printf(">>> %s, %d, %d\n", message, metadata.partition(), metadata.offset());
         producer.flush();
         producer.close();
     }
