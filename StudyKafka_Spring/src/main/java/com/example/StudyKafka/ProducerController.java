@@ -15,4 +15,16 @@ public class ProducerController {
         kafkaProducerService.send(message);
         return "published a message :" + message;
     }
+
+    @RequestMapping("/publish2")
+    public String publishWithCallBack(String message) {
+        kafkaProducerService.sendWithCallBack(message);
+        return "published a message :" + message;
+    }
+
+    @RequestMapping("/publish3")
+    public String publishWithJson(MyMessage message) {
+        kafkaProducerService.sendJson(message);
+        return "published a message :" + message.getName() + ", " + message.getMessage();
+    }
 }
